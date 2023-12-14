@@ -37,7 +37,12 @@ docker-compose -f stack.yml down
 Aller à l'URL suivante: about:config
 security.fileuri.strict_origin_policy true -> false 
 
-## Projet réalisé par:
-- Romain Andres https://github.com/VendenIX
-- Amirath Fara Orou Guidou https://github.com/Amirath6
+## Projet réalisé par
+
+**Romain Andres**  
+[![GitHub](https://img.shields.io/badge/GitHub-VendenIX-blue?style=flat-square&logo=github)](https://github.com/VendenIX)
+
+**Amirath Fara Orou Guidou**  
+[![GitHub](https://img.shields.io/badge/GitHub-Amirath6-blue?style=flat-square&logo=github)](https://github.com/Amirath6)
+
 

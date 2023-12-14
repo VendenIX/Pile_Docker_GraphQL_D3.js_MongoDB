@@ -9,6 +9,11 @@ Ce projet contient une pile de containers permettant de lancer une visualisation
  - un serveur Apache,    
  - un container GraphQL contenant le code du serveur et les résolveurs.
 
+Lancer le serveur GraphQL, se placer dans le dossier 'graphql' :
+```
+npm init es6 --yes
+npm install mongodb @apollo/server graphql --save  --no-bin-links
+```
 ```
 docker-compose -f stack.yml up -d
 ```

@@ -1,0 +1,113 @@
+type Prestation{
+     id: Int
+     description: String
+     sum: Int
+     count: Int
+     avg: Float
+}
+
+type Department {
+     id: Int
+     name: String
+     sum: Int
+     count: Int
+     avg: Float
+}
+
+type Region {
+     id: Int 
+     name: String
+}
+
+type Address {
+     id: Int 
+     city: City
+     latitude: Float 
+     longitude: Float
+     department: Department
+     region: Region
+}
+
+type Client {
+    id: Int
+    lastname: String
+    firstname: String
+    street: String
+    zip: String
+    city: City
+}
+
+type Date {
+    id: Int
+    text: String
+    year: Int
+    trimester: Int
+    month: Int
+    month_name: String
+    day: Int
+    day_name: String
+    hour: Int
+    minute: Int
+}
+
+type City {
+    id: Int
+    name: String
+    department: Department
+    region: Region
+}
+
+
+type Query {
+    prestations(
+        prestationId: Int,
+        minSum: Int,
+        maxSum: Int
+    ): [Prestation]
+}
+
+
+extend type Query {
+     departments(
+        departmentId: Int,
+        minSum: Int,
+        maxSum: Int
+    ): [Department]
+}
+
+extend type Query {
+    seeAllAddresses(
+        id: Int,
+        city: String,
+        latitude: Float 
+        longitude: Float
+        department: Department
+        region: Region
+    ): [Address]
+}
+     
+extend type Query {
+     clients(
+        clientId: Int,
+        lastname: String,
+        firstname: String,
+        city: String,
+    ): [Client]
+}
+
+extend type Query {
+    dates(
+        year: Int,
+        month: Int,
+        day: Int,
+        dayName: String,
+        hour: Int,
+        minute: Int,
+        monthName: String,
+        text: String,
+        trimester: Int
+    ): [Date]
+}
+
+
+

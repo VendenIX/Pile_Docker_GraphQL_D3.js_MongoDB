@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta name="description" content="Liste des prestations" />
+  <meta charset="utf-8">
+  <title>Prestations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/d3.min.js"></script>
+</head>
+
+<body>
+
+  <div> 
+    <button onclick="sortByDescription()">Sort by description</button>
+    <button onclick="sortByCount()">Sort by count</button>
+    <button onclick="sortBySum()">Sort by sum</button>
+</div>
+
+  <div id="content">
+
+  </div>
+
+  <script>
+    let prestations;
+    let prestationsDescriptionSort = "down";
+    let prestationsCountSort = "down";
+    let prestationsSumSort = "down";
+
+    function sortByDescription() {
+      if (prestationsDescriptionSort == "down") {
+        prestations.sort((a, b) => d3.ascending(a.description, b.description));
+        prestationsDescriptionSort = "up";
+      } else {
+        prestations.sort((a, b) => d3.descending(a.description, b.description));
+        prestationsDescriptionSort = "down";
+      }
+
+      d3
+        .select("#content")
+        .selectAll("div")
+        .data(prestations, d => d.id)
+        .order()
+      }
+
+      function sortByCount() {
+      if (prestationsCountSort == "down") {
+        prestations.sort((a, b) => d3.ascending(a.count, b.count));
+        prestationsCountSort = "up";
+      } else {
+        prestations.sort((a, b) => d3.descending(a.count, b.count));
+        prestationsCountSort = "down";
+      }
+
+      d3
+        .select("#content")
+        .selectAll("div")
+        .data(prestations, d => d.id)
+        .order()
+      }
+
+      function sortBySum() {
+      if (prestationsSumSort == "down") {
+        prestations.sort((a, b) => d3.ascending(a.sum, b.sum));
+        prestationsSumSort = "up";
+      } else {
+        prestations.sort((a, b) => d3.descending(a.sum, b.sum));
+        prestationsSumSort = "down";
+      }
+
+      d3
+        .select("#content")
+        .selectAll("div")
+        .data(prestations, d => d.id)
+        .order()
+      }
+
+
+
+    function draw(root) {
+      console.log(root)
+
+      prestations = root.data.prestations
+
+      d3.selectAll("#content")
+        .selectAll("div")
+        .data(root.data.prestations)
+        .join("div")
+        .attr("class", "prestation")
+        .append("div")
+        .attr("class", "prestationDescription")
+        .text(d => d.description)
+
+      d3.selectAll(".prestation")
+        .append("div")
+        .attr("class", "prestationCount")
+        .text(d => d.count)
+
+      d3.selectAll(".prestation")
+        .append("div")
+        .attr("class", "prestationSum")
+        .transition()
+        .style("with", "0px")
+        .duration(1000)
+        .style("width", d => d.sum / 2000 + "px")
+        .text(d => d.sum)
+
+    }
+
+
+    d3.json("http://127.0.0.1:4000/?query={prestations{id description sum count avg}}").then(draw)
+  </script>
+
+</body>
+
+</html>

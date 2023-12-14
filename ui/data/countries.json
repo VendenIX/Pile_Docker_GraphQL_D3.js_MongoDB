@@ -1,0 +1,42 @@
+[
+  {
+    "country": "United States",
+    "count": 12394
+  },
+  {
+    "country": "Russia",
+    "count": 6148
+  },
+  {
+    "country": "Germany (FRG)",
+    "count": 1653
+  },
+  {
+    "country": "France",
+    "count": 2162
+  },
+  {
+    "country": "United Kingdom",
+    "count": 1214
+  },
+  {
+    "country": "China",
+    "count": 1131
+  },
+  {
+    "country": "Spain",
+    "count": 814
+  },
+  {
+    "country": "Netherlands",
+    "count": 1167
+  },
+  {
+    "country": "Italy",
+    "count": 660
+  },
+  {
+    "country": "Israel",
+    "count": 1263
+  }
+]

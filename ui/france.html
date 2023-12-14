@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<head>
+
+    <meta charset="utf-8">
+
+
+    <!-- Load d3.js -->
+    <script src="js/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="css/colorbrewer.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- Create a div where the graph will take place -->
+    <div id="map"></div>
+
+    <script>
+
+        const width = 700, height = 550;
+
+        // fortement inspiré de https://www.datavis.fr/d3js/map-population
+        // documentation à https://github.com/d3/d3-geo
+
+        // le générateur de chemin géographique (geographic path generator) 
+        // d3.geoPath est un générateur de forme. Il utilise des données 
+        // GeoJSON qu'il transforme en un chemin SVG
+
+        const path = d3.geoPath();
+
+        // un chemin a besoin d'un type de projection qui définit comment 
+        // des données sphériques sont représentées en deux dimension.
+        // Ici, on utilise la profection conique conforme
+        const projection = d3.geoConicConformal() // Lambert-93
+            .center([2.454071, 46.279229]) // Center on France
+            .scale(2600)
+            .translate([width / 2 - 50, height / 2]);
+
+        path.projection(projection);
+
+        // définition du canvas initial
+        const svg = d3.select('#map').append("svg")
+            .attr("id", "svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("class", "Blues");
+
+        // on ajoute un élément "departments"    
+        const departments = svg.append("g");
+
+        // on déclare un tableau de promesses qui vont s'enchaîner
+        var promises = [];
+        promises.push(d3.json('data/departments.json'));                 
+        promises.push(d3.json("http://127.0.0.1:4000/?query={departments{id count}}"));
+        promises.push(d3.json("http://127.0.0.1:4000/?query={seeAllAddresses {latitude longitude id} }"));
+
+        // lorsque toutes les promesses sont réalisée :
+        Promise.all(promises).then(function (values) {
+            const geojson = values[0]; // Récupération de la première promesse : le contenu du fichier geoJSON
+            console.log("geojson", geojson)
+            const dpts = values[1].data.departments; // Récupération de la deuxième promesse : les ventes par département
+            console.log("departments", dpts)
+            const addresses = values[2].data.seeAllAddresses; // Récupération de la troisième promesse : les adresses des clients
+
+            // ajout des chemins de chaque département
+            var features = departments
+                .selectAll("path")
+                .data(geojson.features)
+                .enter()
+                .append("path")
+                .attr('id', d => "d" + d.properties.CODE_DEPT)
+                .attr("d", path);
+
+            // définition de la fonction de transformation de valeur vers l'intervalle [0,1]
+            var quantile = d3.scaleQuantile()
+                .domain([0, d3.max(dpts, e => +e.count)])
+                .range(d3.range(9));
+
+            // ajoute d'un élément SVG pour afficher la légende
+            var legend = svg.append('g')
+                .attr('transform', 'translate(525, 150)')
+                .attr('id', 'legend');
+
+            legend.selectAll('.colorbar')
+                .data(d3.range(9))
+                .enter().append('svg:rect')
+                .attr('y', d => d * 20 + 'px')
+                .attr('height', '20px')
+                .attr('width', '20px')
+                .attr('x', '0px')
+                .attr("class", d => "q" + d + "-9")
+
+            var legendScale = d3.scaleLinear()
+                .domain([0, d3.max(dpts, e => +e.count)])
+                .range([0, 9 * 20]);
+
+            var legendAxis = svg.append("g")
+                .attr('transform', 'translate(550, 150)')
+                .call(d3.axisRight(legendScale).ticks(6));
+
+            const zeroPad = (num, places) => String(num).padStart(places, '0')
+
+            dpts.forEach(function (e, i) {
+                d3.select("#d" + zeroPad(e.id, 2))
+                    .attr("class", d => "department q" + quantile(+e.count) + "-9")
+                    .on("mouseover", function (event, d) {
+                        div.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        div.html("<b>Département : </b>" + e.id + "<br>"
+                            + "<b>Count : </b>" + e.count + "<br>")
+                            .style("left", (event.pageX + 30) + "px")
+                            .style("top", (event.pageY - 30) + "px");
+                    })
+                    .on("mouseout", function (event, d) {
+                        div.style("opacity", 0);
+                        div.html("")
+                            .style("left", "-500px")
+                            .style("top", "-500px");
+                    });
+            });
+
+            //afficher un point rouge a chaque addresse avec latitude et longitude de         promises.push(d3.json("http://127.0.0.1:4000/?query={seeAllAddresses {latitude longitude id} }"));
+            addresses.forEach(function(address) {
+                if (address.latitude && address.longitude) {
+                    // Convertir les coordonnées géographiques en coordonnées de l'écran
+                    const coords = projection([address.longitude, address.latitude]);
+                    svg.append("circle")
+                        .attr("cx", coords[0])
+                        .attr("cy", coords[1])
+                        .attr("r", 3) // Rayon du cercle
+                        .style("fill", "red");
+                }
+            });
+        });
+
+        // Refresh colors on combo selection
+        d3.select("select").on("change", function () {
+            d3.selectAll("svg").attr("class", this.value);
+        });
+
+        // Append a DIV for the tooltip
+        var div = d3.select("body").append("div")
+            .attr("class", "chart-tooltip")
+            .style("opacity", 0);
+    </script>
+</body>

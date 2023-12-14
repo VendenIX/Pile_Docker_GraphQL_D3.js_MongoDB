@@ -1,0 +1,48 @@
+version: "3.6" 
+
+services:
+  graphql:
+    image: graphql
+    ports:
+      - 4000:4000
+    links:
+     - "mongo:mongodb"
+    build:
+      context: graphql
+      dockerfile: Dockerfile
+
+  apache:
+        image: php:7.2-apache
+        ports:
+          - 80:80
+        volumes:
+          - ./ui/:/var/www/html
+        links:
+          - "graphql:graphql"
+   
+  mongo:
+    image: mongo:7.0.2
+    container_name: mongo-dev
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express:
+    image: mongo-express:1.0.0
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo-dev
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=example
+      - ME_CONFIG_BASICAUTH_USERNAME=root
+      - ME_CONFIG_BASICAUTH_PASSWORD=example
+
+volumes:
+  mongodata:

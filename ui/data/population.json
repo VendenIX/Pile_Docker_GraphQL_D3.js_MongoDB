@@ -1,0 +1,394 @@
+[
+  {
+    "department": 1,
+    "count": 614331
+  },
+  {
+    "department": 2,
+    "count": 555094
+  },
+  {
+    "department": 3,
+    "count": 353124
+  },
+  {
+    "department": 4,
+    "count": 165155
+  },
+  {
+    "department": 5,
+    "count": 142312
+  },
+  {
+    "department": 6,
+    "count": 1094579
+  },
+  {
+    "department": 7,
+    "count": 324885
+  },
+  {
+    "department": 8,
+    "count": 291678
+  },
+  {
+    "department": 9,
+    "count": 157582
+  },
+  {
+    "department": 10,
+    "count": 311720
+  },
+  {
+    "department": 11,
+    "count": 365854
+  },
+  {
+    "department": 12,
+    "count": 288364
+  },
+  {
+    "department": 13,
+    "count": 2000550
+  },
+  {
+    "department": 14,
+    "count": 699561
+  },
+  {
+    "department": 15,
+    "count": 154135
+  },
+  {
+    "department": 16,
+    "count": 364429
+  },
+  {
+    "department": 17,
+    "count": 640803
+  },
+  {
+    "department": 18,
+    "count": 319600
+  },
+  {
+    "department": 19,
+    "count": 252235
+  },
+  {
+    "department": 21,
+    "count": 538505
+  },
+  {
+    "department": 22,
+    "count": 612383
+  },
+  {
+    "department": 23,
+    "count": 127919
+  },
+  {
+    "department": 24,
+    "count": 426607
+  },
+  {
+    "department": 25,
+    "count": 542509
+  },
+  {
+    "department": 26,
+    "count": 499313
+  },
+  {
+    "department": 27,
+    "count": 603194
+  },
+  {
+    "department": 28,
+    "count": 440291
+  },
+  {
+    "department": 29,
+    "count": 929286
+  },
+  {
+    "department": 30,
+    "count": 726285
+  },
+  {
+    "department": 31,
+    "count": 1268370
+  },
+  {
+    "department": 32,
+    "count": 195489
+  },
+  {
+    "department": 33,
+    "count": 1479277
+  },
+  {
+    "department": 34,
+    "count": 1062617
+  },
+  {
+    "department": 35,
+    "count": 1015470
+  },
+  {
+    "department": 36,
+    "count": 238261
+  },
+  {
+    "department": 37,
+    "count": 605819
+  },
+  {
+    "department": 38,
+    "count": 1233759
+  },
+  {
+    "department": 39,
+    "count": 271973
+  },
+  {
+    "department": 40,
+    "count": 397766
+  },
+  {
+    "department": 41,
+    "count": 340729
+  },
+  {
+    "department": 42,
+    "count": 766729
+  },
+  {
+    "department": 43,
+    "count": 231877
+  },
+  {
+    "department": 44,
+    "count": 1317685
+  },
+  {
+    "department": 45,
+    "count": 674913
+  },
+  {
+    "department": 46,
+    "count": 181232
+  },
+  {
+    "department": 47,
+    "count": 342500
+  },
+  {
+    "department": 48,
+    "count": 81281
+  },
+  {
+    "department": 49,
+    "count": 808298
+  },
+  {
+    "department": 50,
+    "count": 517121
+  },
+  {
+    "department": 51,
+    "count": 579533
+  },
+  {
+    "department": 52,
+    "count": 191004
+  },
+  {
+    "department": 53,
+    "count": 317006
+  },
+  {
+    "department": 54,
+    "count": 746502
+  },
+  {
+    "department": 55,
+    "count": 200509
+  },
+  {
+    "department": 56,
+    "count": 744663
+  },
+  {
+    "department": 57,
+    "count": 1066667
+  },
+  {
+    "department": 58,
+    "count": 226997
+  },
+  {
+    "department": 59,
+    "count": 2617939
+  },
+  {
+    "department": 60,
+    "count": 823668
+  },
+  {
+    "department": 61,
+    "count": 301421
+  },
+  {
+    "department": 62,
+    "count": 1489209
+  },
+  {
+    "department": 63,
+    "count": 649643
+  },
+  {
+    "department": 64,
+    "count": 674908
+  },
+  {
+    "department": 65,
+    "count": 237945
+  },
+  {
+    "department": 66,
+    "count": 457238
+  },
+  {
+    "department": 67,
+    "count": 1115226
+  },
+  {
+    "department": 68,
+    "count": 765634
+  },
+  {
+    "department": 69,
+    "count": 1756069
+  },
+  {
+    "department": 70,
+    "count": 247311
+  },
+  {
+    "department": 71,
+    "count": 574874
+  },
+  {
+    "department": 72,
+    "count": 579497
+  },
+  {
+    "department": 73,
+    "count": 428751
+  },
+  {
+    "department": 74,
+    "count": 760979
+  },
+  {
+    "department": 75,
+    "count": 2268265
+  },
+  {
+    "department": 76,
+    "count": 1275952
+  },
+  {
+    "department": 77,
+    "count": 1347008
+  },
+  {
+    "department": 78,
+    "count": 1435448
+  },
+  {
+    "department": 79,
+    "count": 380569
+  },
+  {
+    "department": 80,
+    "count": 583388
+  },
+  {
+    "department": 81,
+    "count": 387099
+  },
+  {
+    "department": 82,
+    "count": 248227
+  },
+  {
+    "department": 83,
+    "count": 1026222
+  },
+  {
+    "department": 84,
+    "count": 555240
+  },
+  {
+    "department": 85,
+    "count": 654096
+  },
+  {
+    "department": 86,
+    "count": 438566
+  },
+  {
+    "department": 87,
+    "count": 384781
+  },
+  {
+    "department": 88,
+    "count": 392846
+  },
+  {
+    "department": 89,
+    "count": 353366
+  },
+  {
+    "department": 90,
+    "count": 146475
+  },
+  {
+    "department": 91,
+    "count": 1233645
+  },
+  {
+    "department": 92,
+    "count": 1590749
+  },
+  {
+    "department": 93,
+    "count": 1534895
+  },
+  {
+    "department": 94,
+    "count": 1340868
+  },
+  {
+    "department": 95,
+    "count": 1187836
+  },
+  {
+    "department": 971,
+    "count": 409905
+  },
+  {
+    "department": 972,
+    "count": 400535
+  },
+  {
+    "department": 973,
+    "count": 231167
+  },
+  {
+    "department": 974,
+    "count": 829903
+  }
+]

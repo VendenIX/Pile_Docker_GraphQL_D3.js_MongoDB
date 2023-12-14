@@ -9,15 +9,26 @@ Ce projet contient une pile de containers permettant de lancer une visualisation
  - un serveur Apache,    
  - un container GraphQL contenant le code du serveur et les résolveurs.
 
-Pour lancer la pile: 
 ```
-docker-compose up -d
+docker-compose -f stack.yml up -d
 ```
-Pour ouvrir rapidement toutes les pages web des containers pour le dev:
+Ré-importer les données dans la base de données MongoDB
+```
+docker exec -i mongo-dev sh -c 'mongoimport -d dba -c sales --authenticationDatabase admin -u root -p example' < sales.bson
+```
+Pour lancer rapidement toutes les pages web:
 ```
 sh openfirefox.sh
 ```
-Pour arrêter la pile: 
+Pour arrêter la pile de containers :
 ```
-docker-compose down
+docker-compose -f stack.yml down
 ```
+
+
+
+## Si jamais il y a un problème de CORS
+### Dans firefox:
+Aller à l'URL suivante: about:config
+security.fileuri.strict_origin_policy true -> false 
+

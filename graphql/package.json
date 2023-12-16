@@ -20,7 +20,7 @@
   "author": {
     "name": "",
     "email": "",
-    "url": ""
+    "url": "process.env.MONGO_URI"
   },
   "contributors": [],
   "scripts": {

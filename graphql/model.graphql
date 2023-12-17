@@ -66,6 +66,15 @@ type Query {
     ): [Prestation]
 }
 
+input DepartmentInput {
+    id: Int
+}
+
+input RegionInput {
+    id: Int
+}
+
+
 
 extend type Query {
      departments(
@@ -79,12 +88,13 @@ extend type Query {
     seeAllAddresses(
         id: Int,
         city: String,
-        latitude: Float 
-        longitude: Float
-        department: Department
-        region: Region
+        latitude: Float,
+        longitude: Float,
+        department: DepartmentInput,
+        region: RegionInput
     ): [Address]
 }
+
      
 extend type Query {
      clients(

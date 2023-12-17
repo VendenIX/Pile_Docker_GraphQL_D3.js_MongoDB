@@ -2,9 +2,9 @@ import { MongoClient } from 'mongodb';
 
 // Connection URI
 // version container
-const uri = 'mongodb://root:example@mongodb:27017'
+//const uri = 'mongodb://root:example@mongodb:27017'
 // version runtime
-//const uri = 'mongodb://root:example@localhost:27017';
+const uri = 'mongodb://root:example@localhost:27017';
 
 // Database Name
 const dbName = 'dba';
@@ -120,14 +120,14 @@ const resolvers = {
           throw new Error("Erreur lors de la récupération des départements: " + error.message);
       }
   },
-  seeAllAddresses: async (root, { id, city, latitude, longitude, departmentId, regionId }, context) => {
+  seeAllAddresses: async (root, { id, city, latitude, longitude, department, region }, context) => {
     let query = {};
     if (id) query['address.id'] = id;
     if (city !== undefined) query['address.city.name'] = new RegExp(city, 'i');
     if (latitude !== undefined) query['address.latitude'] = latitude;
     if (longitude !== undefined) query['address.longitude'] = longitude;
-    if (departmentId) query['address.department.id'] = departmentId;
-    if (regionId) query['address.region.id'] = regionId;
+    if (department && department.id) query['address.department.id'] = department.id;
+    if (region && region.id) query['address.region.id'] = region.id;
 
     const pipeline = [
         { $match: query },
@@ -168,7 +168,7 @@ const resolvers = {
     ];
 
     const addresses = await collection.aggregate(pipeline).toArray();
-    
+
     return addresses.map(item => {
         return {
             id: item.id,
@@ -180,6 +180,7 @@ const resolvers = {
         };
     });
 }
+
 ,
   clients: async (_, { clientId, lastname, firstname, city }) => {
     const db = client.db(dbName);

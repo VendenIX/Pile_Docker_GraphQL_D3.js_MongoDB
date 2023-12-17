@@ -57,6 +57,31 @@ type City {
     region: Region
 }
 
+type Sales{
+     departementId: Int
+     name: String
+     prestationId: Int
+     prestationDescription: String
+     sum: Int
+     avg: Float
+     count: Int
+     minSum: Int,
+     maxSum: Int,
+}
+
+type MostSale {
+  id: Int
+  text: String
+  year: Int
+  trimester: Int
+  month: Int
+  month_name: String
+  day: Int
+  day_name: String
+  hour: Int
+  minute: Int
+}
+
 
 type Query {
     prestations(
@@ -107,6 +132,28 @@ extend type Query {
         text: String,
         trimester: Int
     ): [Date]
+}
+
+type Query {
+    sales(
+        prestationId: Int,
+        departmentId: Int,
+        minSum: Int,
+        maxSum: Int
+    ): [Sales]
+}
+
+type Query {
+  mostSales(prestationId: Int, departmentId: Int, regionId: Int, cityId: Int): [MostSale]
+}
+
+type Query{
+     prestations: [Prestation]
+     departments: [Department]
+     sales: [Sales]
+     addresses: [Address]
+     clients: [Client]
+     dates: [Date]
 }
 
 

@@ -1,95 +1,52 @@
-query ExampleQuery {
-  prestations {
-    id
-  }
-}
-
-query testDepartments {
-  departments {
-    avg
-    count
-    id
-    name
-    sum
-  }
-}
-
-query testDepartment2s($departmentId: Int, $minSum: Int, $maxSum: Int) {
-  departments(departmentId: $departmentId, minSum: $minSum, maxSum: $maxSum) {
-    avg
-    count
-    id
-    name
-    sum
-  }
-}
-
-query testPrestations {
-  prestations {
-    avg
-    count
-    description
-    id
-    sum
-  }
-}
-
-
-query testPrestation2s($prestationId: Int, $minSum: Int, $maxSum: Int) {
-  prestations(prestationId: $prestationId, minSum: $minSum, maxSum: $maxSum) {
-    avg
-    count
-    description
-    id
-    sum
+  query ExampleQuery {
+    prestations {
+      id
+    }
   }
 
-  query seeAllAddresses {
-  seeAllAddresses {
-    city
-    department {
+  query testDepartments {
+    departments {
       avg
       count
       id
       name
       sum
     }
-    id
-    latitude
-    longitude
-    region {
-      id
-      name
-    }
-
   }
-}
-}
 
-query seeAllAddresse2s($id: Int, $city: String, $departmentId: Int, $regionId: Int) {
-  seeAllAddresses(id: $id, city: $city, departmentId: $departmentId, regionId: $regionId) {
-    city
-    department {
+  query testDepartment2s($departmentId: Int, $minSum: Int, $maxSum: Int) {
+    departments(departmentId: $departmentId, minSum: $minSum, maxSum: $maxSum) {
       avg
       count
       id
       name
       sum
     }
-    id
-    latitude
-    longitude
-    region {
+  }
+
+  query testPrestations {
+    prestations {
+      avg
+      count
+      description
       id
-      name
+      sum
     }
   }
-}
 
 
-uery clients {
-  clients {
-    city {
+  query testPrestation2s($prestationId: Int, $minSum: Int, $maxSum: Int) {
+    prestations(prestationId: $prestationId, minSum: $minSum, maxSum: $maxSum) {
+      avg
+      count
+      description
+      id
+      sum
+    }
+
+    query seeAllAddresses {
+    seeAllAddresses {
+      city
       department {
         avg
         count
@@ -98,31 +55,74 @@ uery clients {
         sum
       }
       id
-      name
+      latitude
+      longitude
+      region {
+        id
+        name
+      }
+
+    }
+  }
+  }
+
+  query seeAllAddresse2s($id: Int, $city: String, $departmentId: Int, $regionId: Int) {
+    seeAllAddresses(id: $id, city: $city, departmentId: $departmentId, regionId: $regionId) {
+      city
+      department {
+        avg
+        count
+        id
+        name
+        sum
+      }
+      id
+      latitude
+      longitude
       region {
         id
         name
       }
     }
-    firstname
-    lastname
-    id
-    street
-    zip
   }
-}
 
-uery dates($year: Int, $month: Int, $day: Int, $dayName: String, $hour: Int, $minute: Int, $monthName: String, $text: String, $trimester: Int) {
-  dates(year: $year, month: $month, day: $day, dayName: $dayName, hour: $hour, minute: $minute, monthName: $monthName, text: $text, trimester: $trimester) {
-    day
-    day_name
-    hour
-    id
-    minute
-    month
-    month_name
-    text
-    trimester
-    year
+
+  uery clients {
+    clients {
+      city {
+        department {
+          avg
+          count
+          id
+          name
+          sum
+        }
+        id
+        name
+        region {
+          id
+          name
+        }
+      }
+      firstname
+      lastname
+      id
+      street
+      zip
+    }
   }
-}
+
+  query dates($year: Int, $month: Int, $day: Int, $dayName: String, $hour: Int, $minute: Int, $monthName: String, $text: String, $trimester: Int) {
+    dates(year: $year, month: $month, day: $day, dayName: $dayName, hour: $hour, minute: $minute, monthName: $monthName, text: $text, trimester: $trimester) {
+      day
+      day_name
+      hour
+      id
+      minute
+      month
+      month_name
+      text
+      trimester
+      year
+    }
+  }

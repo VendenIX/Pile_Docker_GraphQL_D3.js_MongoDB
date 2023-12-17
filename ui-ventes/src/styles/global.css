@@ -1,0 +1,17 @@
+.main-container {
+    display: flex;
+    background-color: darkblue;
+  }
+  
+  .left-panel, .right-panel {
+    width: 50%;
+  }
+  
+/*  .left-panel {
+  }
+  
+  .right-panel {
+
+  }
+
+*/

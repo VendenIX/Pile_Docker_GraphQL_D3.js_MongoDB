@@ -7,7 +7,7 @@ import { MongoClient } from 'mongodb';
 const uri = 'mongodb://root:example@localhost:27017';
 
 // Database Name
-const dbName = 'dba';
+const dbName = 'bda';
 
 // Collection Name
 const collectionName = 'sales';
@@ -182,6 +182,8 @@ const resolvers = {
 }
 
 ,
+
+
   clients: async (_, { clientId, lastname, firstname, city }) => {
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
@@ -229,6 +231,8 @@ const resolvers = {
         throw new Error("Erreur lors de la récupération des clients: " + error.message);
     }
   },
+
+
   dates: async (_, { year, month, day, dayName, hour, minute, monthName, text, trimester }) => {
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
@@ -260,8 +264,119 @@ const resolvers = {
             minute: item.date.minute
         };
     });
-  }
+  },
+  
+  // Toutes les ventes
+  sales: async (_, {prestationId, departmentId, minSum, maxSum}) => {
+    // Préparation des conditions de correspondance
+    let matchConditions = {};
+    if (prestationId !== undefined) {
+      matchConditions['prestation.id'] = prestationId;
+    }
 
+    if (departmentId !== undefined) {
+      matchConditions['address.department.id'] = departmentId;
+    }
+
+    if (minSum !== undefined || maxSum !== undefined) {
+      matchConditions.price = {};
+      if (minSum !== undefined) matchConditions.price.$gte = minSum;
+      if (maxSum !== undefined) matchConditions.price.$lte = maxSum;
+    }
+
+    // Préparation de l'aggrégation
+    const pipeline = [
+      {
+        $match: matchConditions
+      },
+      {
+        $group: {
+          _id: {
+            departement_id: '$address.department.id',
+            name: '$address.department.name',
+            prestation_id: '$prestation.id',
+            prestation_description: '$prestation.description',
+          },
+          sum: {
+            $sum: '$price'
+          },
+          avg: {
+            $avg: '$price'
+          },
+          count: {
+            $sum: 1
+          },
+
+          minSum: {
+            $min: '$price'
+          },
+
+          maxSum: {
+            $max: '$price'
+          },
+
+        }
+      },
+      {
+        $project: {
+          prestationId: '$_id.prestation_id',
+          prestationDescription: '$_id.prestation_description',
+          departementId: '$_id.departement_id',
+          name: '$_id.name',
+          sum: 1,
+          avg: 1,
+          count: 1,
+          minSum: 1,
+          maxSum: 1,
+          _id: 0
+        }
+      }
+    ];
+
+    // Exécution de l'aggrégation
+    try{
+      const sales = await collection.aggregate(pipeline).toArray();
+      return sales;
+    }
+    catch(error){
+      throw new Error("Erreur lors de récupération des ventes : " + error.message);
+    }
+  },
+
+  // Afficher la date où il y a eu le plus de ventes et dans quel département et pour quelle prestation, et dans quelle region, et dans quelle ville  (avec le prix moyen, le prix total, le nombre de ventes)
+
+  mostSales: async (_, { prestationId, departmentId, regionId, cityId }) => {
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    let query = {};
+
+    if (prestationId !== undefined) query['prestation.id'] = prestationId;
+    if (departmentId !== undefined) query['address.department.id'] = departmentId;
+    if (regionId !== undefined) query['address.region.id'] = regionId;
+    if (cityId !== undefined) query['address.city.id'] = cityId;
+
+    try {
+        const mostSales = await collection.find(query, { projection: { date: 1 } }).toArray();
+        
+        return mostSales.map(item => {
+            return {
+                id: item.date.id,
+                text: item.date.text,
+                year: item.date.year,
+                trimester: item.date.trimester,
+                month: item.date.month,
+                month_name: item.date.month_name,
+                day: item.date.day,
+                day_name: item.date.day_name,
+                hour: item.date.hour,
+                minute: item.date.minute
+            };
+        });
+    } catch (error) {
+        throw new Error("Erreur lors de la récupération des dates: " + error.message);
+    }
+  },
 
     }
 }

@@ -1,12 +1,30 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { fetchDepartments, fetchGeoJsonData } from '../services/api.js'; 
+import { fetchDepartments, fetchGeoJsonData } from '../services/api'; 
 import '../styles/global.css'; 
+import '../styles/colorbrewer.css';
 
 const MapFrance = () => {
     const mapRef = useRef(null);
 
     useEffect(() => {
+        // Initialisation de la carte
+        initMap();
+
+        // Fonction de nettoyage pour éviter les doublons
+        return () => {
+            if (mapRef.current) {
+                d3.select(mapRef.current).select("svg").remove();
+            }
+        };
+    }, []);
+
+    const initMap = async () => {
+        // Logique de nettoyage: Supprime le SVG existant si présent
+        if (mapRef.current) {
+            d3.select(mapRef.current).select("svg").remove();
+        }
+        // Configuration initiale
         const width = 700, height = 550;
         const projection = d3.geoConicConformal()
             .center([2.454071, 46.279229])
@@ -14,73 +32,89 @@ const MapFrance = () => {
             .translate([width / 2 - 50, height / 2]);
         const path = d3.geoPath().projection(projection);
 
+        // Création du SVG
         const svg = d3.select(mapRef.current)
             .append("svg")
             .attr("width", width)
             .attr("height", height)
             .attr("class", "Blues");
 
-        const loadData = async () => {
-            try {
-                const geojsonData = await fetchGeoJsonData('/departments.json');
-                console.log("LE LAC TI TI CA CA EST MAGIQUE")
-                console.log(geojsonData)
-                const departmentData = await fetchDepartments();
+        // Chargement des données
+        const geojsonData = await fetchGeoJsonData('/departments.json');
+        const departmentData = await fetchDepartments();
 
-                const departments = svg.append("g");
-                departments.selectAll("path")
-                    .data(geojsonData.features)
-                    .enter()
-                    .append("path")
-                    .attr("d", path)
-                    .attr('id', d => "d" + d.properties.CODE_DEPT);
+        // Affichage des départements
+        renderDepartments(svg, geojsonData, departmentData, path);
 
-                // Échelle de quantile pour le coloriage des départements
-                const quantile = d3.scaleQuantile()
-                    .domain([0, d3.max(departmentData.departments, e => e.count)])
-                    .range(d3.range(9));
+        // Création de la légende
+        createLegend(svg, departmentData);
+    };
 
-                // Coloriage des départements en fonction des données de vente
-                departmentData.departments.forEach(function (e) {
-                    d3.select("#d" + e.id)
-                        .attr("class", d => "department q" + quantile(e.count) + "-9");
-                });
-
-                // Création de la légende
-                const legend = svg.append('g')
-                    .attr('transform', 'translate(525, 150)')
-                    .attr('id', 'legend');
-
-                legend.selectAll('.colorbar')
-                    .data(d3.range(9))
-                    .enter().append('svg:rect')
-                    .attr('y', d => d * 20 + 'px')
-                    .attr('height', '20px')
-                    .attr('width', '20px')
-                    .attr('x', '0px')
-                    .attr("class", d => "q" + d + "-9");
-
-                const legendScale = d3.scaleLinear()
-                    .domain([0, d3.max(departmentData.departments, e => e.count)])
-                    .range([0, 9 * 20]);
-
-                svg.append("g")
-                    .attr('transform', 'translate(550, 150)')
-                    .call(d3.axisRight(legendScale).ticks(6));
-
-            } catch (error) {
-                console.error("Error loading data:", error);
+    const renderDepartments = (svg, geojsonData, departmentData, path) => {
+        // Créez une échelle de couleurs en fonction du compte
+        const colorScale = d3.scaleQuantile()
+            .domain([0, d3.max(departmentData.departments, e => +e.count)])
+            .range(['#f7fbff', '#08306b']); // Vous pouvez personnaliser les couleurs ici
+    
+        const departments = svg.append("g");
+        const departmentPaths = departments.selectAll("path")
+            .data(geojsonData.features)
+            .enter()
+            .append("path")
+            .attr("d", path)
+            .attr('id', d => "d" + d.properties.CODE_DEPT)
+            .attr("class", d => {
+                const dept = departmentData.departments.find(dept => dept.id === parseInt(d.properties.CODE_DEPT));
+                return dept ? "department" : "department"; // Vous pouvez laisser la classe de base ici
+            })
+            .style("fill", d => {
+                const dept = departmentData.departments.find(dept => dept.id === parseInt(d.properties.CODE_DEPT));
+                return dept ? colorScale(dept.count) : "#ccc"; // Remplacez la couleur par celle de l'échelle
+            });
+    
+        // Ajouter un gestionnaire d'événements de clic pour afficher le nom du département
+        departmentPaths.on("click", function (event, d) {
+            const dept = departmentData.departments.find(dept => dept.id === parseInt(d.properties.CODE_DEPT));
+            console.log(dept)
+            if (dept) {
+                console.log("Département : " + dept.id);
             }
-        };
-
-        loadData();
-
-        return () => {
-            d3.select(mapRef.current).select("svg").remove();
-        };
-    }, []);
+        });
+    };
+    
+    
+    
+    const createLegend = (svg, departmentData) => {
+        // Création du groupe pour la légende
+        const legend = svg.append('g')
+            .attr('transform', 'translate(525, 150)')
+            .attr('id', 'legend');
+    
+        // Création des barres de couleur pour la légende
+        legend.selectAll('.colorbar')
+            .data(d3.range(9))
+            .enter().append('rect')
+            .attr('y', d => d * 20 + 'px')
+            .attr('height', '20px')
+            .attr('width', '20px')
+            .attr('x', '0px')
+            .attr("class", d => "q" + d + "-9");
+    
+        // Création de l'échelle pour l'axe de la légende
+        const legendScale = d3.scaleLinear()
+            .domain([0, d3.max(departmentData.departments, e => e.count)])
+            .range([0, 9 * 20]);
+    
+        // Ajout de l'axe à la légende
+        const legendAxis = d3.axisRight(legendScale).ticks(6);
+        svg.append("g")
+            .attr('transform', 'translate(550, 150)')
+            .call(legendAxis);
+    };
+    
 
     return <div ref={mapRef} id="map"></div>;
+    
 };
 
 export default MapFrance;

@@ -11,7 +11,6 @@ async function fetchGraphQL(query, variables = {}) {
         const json = await response.json();
         return json.data;
     } catch (error) {
-        console.error("Error fetching data:", error);
         throw error;
     }
 }
@@ -26,6 +25,5 @@ export const fetchDepartments = () => {
 };
 
 export const fetchGeoJsonData = (url) => {
-    console.log("Fetching GeoJSON data...")
     return fetch(url).then(res => res.json());
 };

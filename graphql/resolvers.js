@@ -7,7 +7,7 @@ import { MongoClient } from 'mongodb';
 const uri = 'mongodb://root:example@localhost:27017';
 
 // Database Name
-const dbName = 'bda';
+const dbName = 'dba';
 
 // Collection Name
 const collectionName = 'sales';

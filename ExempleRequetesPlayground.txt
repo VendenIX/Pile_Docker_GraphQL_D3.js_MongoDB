@@ -113,6 +113,37 @@ query GetSale{
 }
 
 
+query MostSales {
+  mostSales(prestationId: 3, departmentId: 56, regionId: 11) {
+    id
+    text
+    year
+    trimester
+    month
+    month_name
+    day
+    day_name
+    hour
+    minute
+  }
+}
+
+
+query NbSalesByTrimester {
+  nbSalesByTrimester(prestationId:2, departmentId: 56, regionId: 11) {
+    year
+    trimester
+    count 
+    sum
+    avg
+  }
+}
+
+
+
+
+
+
 
 
 

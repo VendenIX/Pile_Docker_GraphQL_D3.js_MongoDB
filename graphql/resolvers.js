@@ -2,9 +2,9 @@ import { MongoClient } from 'mongodb';
 
 // Connection URI
 // version container
-//const uri = 'mongodb://root:example@mongodb:27017'
+const uri = 'mongodb://root:example@mongodb:27017'
 // version runtime
-const uri = 'mongodb://root:example@localhost:27017';
+// const uri = 'mongodb://root:example@localhost:27017';
 
 // Database Name
 const dbName = 'dba';
@@ -345,7 +345,7 @@ const resolvers = {
 
   // Afficher la date où il y a eu le plus de ventes et dans quel département et pour quelle prestation, et dans quelle region, et dans quelle ville  (avec le prix moyen, le prix total, le nombre de ventes)
 
-  mostSales: async (_, { prestationId, departmentId, regionId, cityId }) => {
+  mostSales: async (_, { prestationId, departmentId, regionId}) => {
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
 
@@ -354,7 +354,6 @@ const resolvers = {
     if (prestationId !== undefined) query['prestation.id'] = prestationId;
     if (departmentId !== undefined) query['address.department.id'] = departmentId;
     if (regionId !== undefined) query['address.region.id'] = regionId;
-    if (cityId !== undefined) query['address.city.id'] = cityId;
 
     try {
         const mostSales = await collection.find(query, { projection: { date: 1 } }).toArray();
@@ -377,6 +376,76 @@ const resolvers = {
         throw new Error("Erreur lors de la récupération des dates: " + error.message);
     }
   },
+
+
+  nbSalesByTrimester: async (_, { prestationId, departmentId, regionId }) => {
+    // const db = client.db(dbName);
+    // const collection = db.collection(collectionName);
+  
+    let query = {};
+  
+    if (prestationId !== undefined) query['prestation.id'] = prestationId;
+    if (departmentId !== undefined) query['address.department.id'] = departmentId;
+    if (regionId !== undefined) query['address.region.id'] = regionId;
+  
+    const pipeline = [
+      {
+        $match: query
+      },
+      {
+        $group: {
+          _id: {
+            year: '$date.year',
+            trimester: '$date.trimester'
+          },
+
+          sum: {
+            $sum: '$price'
+          },
+          avg: {
+            $avg: '$price'
+          },
+          count: {
+            $sum: 1
+          },
+
+        }
+      },
+      {
+        $project: {
+          year: '$_id.year',
+          trimester: '$_id.trimester',
+          sum: 1, 
+          avg: 1,
+          count: 1,
+          _id: 0
+        }
+      }
+    ];
+  
+    try {
+      const nbSalesByTrimester = await collection.aggregate(pipeline).toArray();
+      return nbSalesByTrimester;
+      // return nbSalesByTrimester.map(item => {
+      //   return {
+      //     id: item.id,
+      //     text: item.text,
+      //     year: item.year,
+      //     trimester: item.trimester,
+      //     month: item.month,
+      //     month_name: item.month_name,
+      //     day: item.day,
+      //     day_name: item.day_name,
+      //     hour: item.hour,
+      //     minute: item.minute,
+      //     salesCountByTrimester: item.count
+      //   };
+      // });
+    } catch (error) {
+      throw new Error("Erreur lors de la récupération des dates : " + error.message);
+    }
+  },
+  
 
     }
 }

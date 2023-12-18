@@ -9,11 +9,18 @@ async function fetchGraphQL(query, variables = {}) {
             body: JSON.stringify({ query, variables })
         });
         const json = await response.json();
+        
+        if (json.errors) {
+            // S'il y a des erreurs dans la réponse GraphQL, lancez une erreur avec le message d'erreur
+            throw new Error(json.errors[0].message);
+        }
+        console.log("le piwi",json.data)
         return json.data;
     } catch (error) {
         throw error;
     }
 }
+
 
 export const fetchDepartments = () => {
     return fetchGraphQL(`{
@@ -23,6 +30,39 @@ export const fetchDepartments = () => {
         }
     }`);
 };
+
+export const fetchDetailsDepartments = (prestationId, departmentId, minSum, maxSum) => {
+  const query = `
+    query Sales($prestationId: Int, $departmentId: Int, $minSum: Int, $maxSum: Int) {
+      sales(
+        prestationId: $prestationId,
+        departmentId: $departmentId,
+        minSum: $minSum,
+        maxSum: $maxSum
+      ) {
+        departementId
+        name
+        prestationId
+        prestationDescription
+        sum
+        avg
+        count
+        minSum
+        maxSum
+      }
+    }
+  `;
+
+  const variables = {
+    prestationId,
+    departmentId,
+    minSum,
+    maxSum,
+  };
+  console.log("bonjour",fetchGraphQL(query, variables));
+  return fetchGraphQL(query, variables); // Appelez votre fonction de requête GraphQL avec la query et les variables.
+};
+
 
 export const fetchGeoJsonData = (url) => {
     return fetch(url).then(res => res.json());

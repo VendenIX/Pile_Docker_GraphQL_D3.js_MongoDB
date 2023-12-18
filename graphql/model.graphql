@@ -166,5 +166,23 @@ type Query{
      dates: [Date]
 }
 
+query Sales($prestationId: Int, $departmentId: Int, $minSum: Int, $maxSum: Int) {
+  sales(
+    prestationId: $prestationId,
+    departmentId: $departmentId,
+    minSum: $minSum,
+    maxSum: $maxSum
+  ) {
+    departementId
+    name
+    prestationId
+    prestationDescription
+    sum
+    avg
+    count
+    minSum
+    maxSum
+  }
+}
 
 

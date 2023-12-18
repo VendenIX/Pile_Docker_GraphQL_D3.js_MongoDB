@@ -42,8 +42,8 @@ const MapFrance = () => {
         // Chargement des données
         const geojsonData = await fetchGeoJsonData('/departments.json');
         const departmentData = await fetchDepartments();
-        console.log("geojsonData:",geojsonData.features.map(d => d.properties.CODE_DEPT));
-        console.log("departmentData:",departmentData.sales.map(dept => dept.departementId));
+        console.log("debug ultime: ", departmentData)
+
         // Affichage des départements
         renderDepartments(svg, geojsonData, departmentData, path);
 
@@ -54,33 +54,34 @@ const MapFrance = () => {
     const renderDepartments = (svg, geojsonData, departmentData, path) => {
         // Créez une échelle de couleurs en fonction du compte
         const colorScale = d3.scaleQuantile()
-            .domain([0, d3.max(departmentData.sales, e => +e.count)])
+            .domain([0, d3.max(departmentData.departments, e => +e.count)]) // Utilisez departmentData directement
             .range(['#f7fbff', '#08306b']); // Vous pouvez personnaliser les couleurs ici
     
-        const departments = svg.append("g");
-        const departmentPaths = departments.selectAll("path")
-            .data(geojsonData.features)
+        // ajout des chemins de chaque département
+        const departmentPaths = svg.selectAll("path") // Utilisez selectAll pour les chemins existants
+            .data(geojsonData.features) // Utilisez features du GeoJSON
             .enter()
             .append("path")
-            .attr("d", path)
             .attr('id', d => "d" + d.properties.CODE_DEPT)
+            .attr("d", path)
             .attr("class", d => {
-                const dept = departmentData.sales.find(dept => dept.departementId === parseInt(d.properties.CODE_DEPT));
+                const dept = departmentData.departments.find(dept => dept.id === parseInt(d.properties.CODE_DEPT));
                 return dept ? "department" : "department"; // Vous pouvez laisser la classe de base ici
             })
             .style("fill", d => {
-                const dept = departmentData.sales.find(dept => dept.departementId === parseInt(d.properties.CODE_DEPT));
+                const dept = departmentData.departments.find(dept => dept.id === parseInt(d.properties.CODE_DEPT));
                 return dept ? colorScale(dept.count) : "#ccc"; // Remplacez la couleur par celle de l'échelle
             });
     
         // Ajouter un gestionnaire d'événements de clic pour afficher le nom du département
         departmentPaths.on("click", function (event, d) {
-            const dept = departmentData.sales.find(dept => dept.departementId === parseInt(d.properties.CODE_DEPT));
+            const dept = departmentData.departments.find(dept => dept.id === parseInt(d.properties.CODE_DEPT));
             if (dept) {
-                console.log("Département : " + dept.departementId);
+                console.log("Département : " + dept.id + " - " + dept.count);
             }
         });
     };
+    
     
     
     
@@ -102,7 +103,7 @@ const MapFrance = () => {
     
         // Création de l'échelle pour l'axe de la légende
         const legendScale = d3.scaleLinear()
-            .domain([0, d3.max(departmentData.sales, e => e.count)])
+            .domain([0, d3.max(departmentData.departments, e => e.count)])
             .range([0, 9 * 20]);
     
         // Ajout de l'axe à la légende

@@ -59,9 +59,9 @@
         // lorsque toutes les promesses sont réalisée :
         Promise.all(promises).then(function (values) {
             const geojson = values[0]; // Récupération de la première promesse : le contenu du fichier geoJSON
-            console.log("geojson", geojson)
+            console.log("geojson", geojson.features)
             const dpts = values[1].data.departments; // Récupération de la deuxième promesse : les ventes par département
-            console.log("departments", dpts)
+            console.log("departmentds", dpts)
             const addresses = values[2].data.seeAllAddresses; // Récupération de la troisième promesse : les adresses des clients
 
             // ajout des chemins de chaque département

@@ -7,25 +7,24 @@
     width: 50%;
   }
   
-/*  .left-panel {
-  }
-  
-  .right-panel {
 
-  }
-
-*/
-
-/* ... et ainsi de suite pour chaque classe */
-.prestation{
-  float: left;
-  width: 600px;
+.left-panel, .right-panel {
+    width: 50%;
+}
+/* Nouveau style pour la partie gauche du haut */
+.left-panel-top {
+  height: 50%;
+  overflow-y: auto; /* Ajout d'une barre de défilement si nécessaire */
 }
 
-.prestationDescription{
-  float: left;
-  width: 250px;
-}    
+/* Nouveau style pour la partie gauche du bas */
+.left-panel-bottom {
+  height: 50%;
+  /* Ajoutez d'autres styles au besoin */
+}
+
+
+
 
 .prestationCount{
   float: left;
@@ -53,21 +52,7 @@
   stroke-width: 2px;
 }
 
-div.chart-tooltip {
-  position: absolute;
-  opacity:0.8;
-  z-index:1000;
-  text-align:left;
-  border-radius:4px;
-  -moz-border-radius:4px;
-  -webkit-border-radius:4px;
-  padding:8px;
-  color:#fff;
-  background-color:#000;
-  font: 12px sans-serif;
-  max-width: 300px;
-  height: 60px;
-}
+
 
 #svg {
   display: block;
@@ -94,4 +79,57 @@ div.chart-tooltip {
   font: 12px sans-serif;
   max-width: 300px;
   height: 3em;
+}
+.map-container {
+  display: flex;
+  /*background-color: red;*/
+  height: 100vh;
+}
+
+#map {
+  flex: 1; /* La carte occupe tout l'espace disponible à gauche */
+  /* Ajoutez d'autres styles au besoin */
+}
+
+.department-details {
+  flex: 1; /* Les détails du département occupent tout l'espace disponible à droite */
+  /* Ajoutez d'autres styles au besoin */
+  /* le positionner a gauche de l'écran moitié supérieure : */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 50%;
+  /* Ajoutez d'autres styles au besoin */
+  background-color: lightcoral;
+  
+}
+
+body {
+  margin: 0; /* Supprimez la marge par défaut du body */
+  background-color: darkblue; /* Définissez la couleur de fond pour tout l'écran */
+  font-family: sans-serif; /* Assurez-vous d'utiliser la police de caractères souhaitée */
+  /* Ajoutez d'autres styles au besoin */
+}
+.department-category {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.category-details {
+  display: flex;
+  flex-direction: row;
+}
+
+.category-details div {
+  margin-right: 20px;
+}
+
+.category-details p {
+  margin: 0;
 }

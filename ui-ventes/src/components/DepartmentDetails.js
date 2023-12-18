@@ -35,21 +35,26 @@ const DepartmentDetails = ({ departmentId }) => {
     // Maintenant, vous pouvez utiliser les données pour afficher les détails du département
     return (
         <div>
-            <h2>Département {departmentId}</h2>
-            <ul>
-                {departmentData.map((data, index) => (
-                    <li key={index}>
-                        <b>Nom de la prestation :</b> {data.prestationDescription}<br />
-                        <b>Sum :</b> {data.sum}<br />
-                        <b>Avg :</b> {data.avg}<br />
-                        <b>Count :</b> {data.count}<br />
-                        <b>Min Sum :</b> {data.minSum}<br />
-                        <b>Max Sum :</b> {data.maxSum}<br />
-                    </li>
-                ))}
-            </ul>
+          <h2>Département {departmentId}</h2>
+          {departmentData.map((data, index) => (
+            <div key={index} className="department-category">
+              <h3>{data.prestationDescription}</h3>
+              <div className="category-details">
+                <div>
+                  <p><b>Sum:</b> {data.sum}</p>
+                  <p><b>Avg:</b> {data.avg}</p>
+                </div>
+                <div>
+                  <p><b>Count:</b> {data.count}</p>
+                  <p><b>Min Sum:</b> {data.minSum}</p>
+                  <p><b>Max Sum:</b> {data.maxSum}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-    );
+      );
+      
 };
 
 export default DepartmentDetails;

@@ -105,26 +105,25 @@ const MapFrance = () => {
     };
 
     return (
-        <>
-            <div ref={mapRef} id="map">
-                {/* Affichage du tooltip */}
-                {tooltipInfo && (
-                    <div
-                        className="tooltip"
-                        style={{ left: tooltipInfo.x + 'px', top: tooltipInfo.y + 'px' }}
-                    >
-                        <b>Département : </b>{tooltipInfo.id}<br />
-                        <b>Count : </b>{tooltipInfo.count}<br />
-                    </div>
-                )}
-            </div>
-            <div>
-                {/* Affichez le composant DepartmentDetails avec l'ID du département sélectionné */}
-                {selectedDepartmentId && <DepartmentDetails departmentId={selectedDepartmentId} />}
-                {/* ... (Votre code existant pour afficher la carte) */}
-            </div>
-        </>
-    );
+        <div className="map-container">
+          <div ref={mapRef} id="map">
+            {/* Affichage du tooltip */}
+            {tooltipInfo && (
+              <div
+                className="tooltip"
+                style={{ left: tooltipInfo.x + 'px', top: tooltipInfo.y + 'px' }}
+              >
+                <b>Département : </b>{tooltipInfo.id}<br />
+                <b>Count : </b>{tooltipInfo.count}<br />
+              </div>
+            )}
+          </div>
+          <div className="department-details">
+            {/* Affichez le composant DepartmentDetails avec l'ID du département sélectionné */}
+            {selectedDepartmentId && <DepartmentDetails departmentId={selectedDepartmentId} />}
+          </div>
+        </div>
+      );
 };
 
 export default MapFrance;

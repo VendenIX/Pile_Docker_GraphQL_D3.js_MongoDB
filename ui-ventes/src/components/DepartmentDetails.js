@@ -6,7 +6,7 @@ const DepartmentDetails = ({ departmentData }) => {
 
     return (
         <div>
-            {/* Affichage des détails du département */}
+            bonjour
         </div>
     );
 };

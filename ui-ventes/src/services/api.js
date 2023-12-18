@@ -17,10 +17,17 @@ async function fetchGraphQL(query, variables = {}) {
 
 export const fetchDepartments = () => {
     return fetchGraphQL(`{
-        departments {
-            id
-            count
-        }
+            sales {
+              departementId
+              name
+              prestationId
+              prestationDescription
+              sum
+              avg
+              count
+              minSum
+              maxSum
+            }
     }`);
 };
 

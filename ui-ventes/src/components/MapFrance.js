@@ -42,7 +42,7 @@ const MapFrance = () => {
         // Chargement des données
         const geojsonData = await fetchGeoJsonData('/departments.json');
         const departmentData = await fetchDepartments();
-        console.log("debug ultime: ", departmentData)
+        console.log("debug ultime: ", geojsonData)
 
         // Affichage des départements
         renderDepartments(svg, geojsonData, departmentData, path);
@@ -57,9 +57,9 @@ const MapFrance = () => {
             .domain([0, d3.max(departmentData.departments, e => +e.count)]) // Utilisez departmentData directement
             .range(['#f7fbff', '#08306b']); // Vous pouvez personnaliser les couleurs ici
     
-        // ajout des chemins de chaque département
+        // ajout des chemins de chaque département, en excluant la Corse (2A et 2B)
         const departmentPaths = svg.selectAll("path") // Utilisez selectAll pour les chemins existants
-            .data(geojsonData.features) // Utilisez features du GeoJSON
+            .data(geojsonData.features.filter(feature => feature.properties.CODE_DEPT !== "2A" && feature.properties.CODE_DEPT !== "2B")) // Excluez la Corse
             .enter()
             .append("path")
             .attr('id', d => "d" + d.properties.CODE_DEPT)
@@ -81,6 +81,8 @@ const MapFrance = () => {
             }
         });
     };
+    
+    
     
     
     

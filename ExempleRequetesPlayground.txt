@@ -1,128 +1,121 @@
-  query ExampleQuery {
+  query AllPrestation {
     prestations {
       id
+      description
+      sum
+      count
+      avg
     }
   }
 
-  query testDepartments {
+
+  query GetPrestation{
+    prestations(
+      prestationId: 2
+      minSum: 100
+      maxSum: 700
+    ) {
+      id
+      description
+      sum
+      count
+      avg
+    }
+}
+
+
+  query AllDepartment{
     departments {
-      avg
-      count
       id
       name
       sum
+      count
+      avg
     }
   }
 
-  query testDepartment2s($departmentId: Int, $minSum: Int, $maxSum: Int) {
-    departments(departmentId: $departmentId, minSum: $minSum, maxSum: $maxSum) {
-      avg
-      count
+  query  GetDepartment{
+    departments(
+      departmentId: 66
+      minSum:100
+      maxSum:500
+    ) {
       id
       name
       sum
-    }
-  }
-
-  query testPrestations {
-    prestations {
-      avg
       count
-      description
-      id
-      sum
-    }
-  }
-
-
-  query testPrestation2s($prestationId: Int, $minSum: Int, $maxSum: Int) {
-    prestations(prestationId: $prestationId, minSum: $minSum, maxSum: $maxSum) {
       avg
-      count
-      description
-      id
-      sum
     }
-
-    query seeAllAddresses {
-    seeAllAddresses {
-      city
-      department {
-        avg
-        count
-        id
-        name
-        sum
-      }
-      id
-      latitude
-      longitude
-      region {
-        id
-        name
-      }
-
-    }
-  }
-  }
-
-  query seeAllAddresse2s($id: Int, $city: String, $departmentId: Int, $regionId: Int) {
-    seeAllAddresses(id: $id, city: $city, departmentId: $departmentId, regionId: $regionId) {
-      city
-      department {
-        avg
-        count
-        id
-        name
-        sum
-      }
-      id
-      latitude
-      longitude
-      region {
-        id
-        name
-      }
-    }
-  }
+}
 
 
-  uery clients {
+
+  query Clients{
     clients {
+      id
+      firstname
+      lastname
+      zip
+      street
       city {
+        id
         department {
-          avg
-          count
           id
           name
           sum
+          count
+          avg
         }
-        id
         name
         region {
           id
           name
         }
       }
-      firstname
-      lastname
-      id
-      street
-      zip
     }
   }
 
-  query dates($year: Int, $month: Int, $day: Int, $dayName: String, $hour: Int, $minute: Int, $monthName: String, $text: String, $trimester: Int) {
-    dates(year: $year, month: $month, day: $day, dayName: $dayName, hour: $hour, minute: $minute, monthName: $monthName, text: $text, trimester: $trimester) {
-      day
-      day_name
-      hour
-      id
-      minute
-      month
-      month_name
-      text
-      trimester
-      year
+
+  query Sales{
+    sales {
+      departementId
+      name
+      prestationId
+      prestationDescription
+      sum
+      avg
+      count
+      minSum
+      maxSum
     }
   }
+
+
+
+
+query GetSale{
+  sales(
+    prestationId: 8,         
+    departmentId: 46,       
+    minSum: 201,               
+    maxSum: 459                
+  ) {
+    prestationId
+    prestationDescription
+    departementId
+    name
+    sum
+    avg
+    count
+    minSum
+    maxSum
+  }
+}
+
+
+
+
+
+
+  
+  

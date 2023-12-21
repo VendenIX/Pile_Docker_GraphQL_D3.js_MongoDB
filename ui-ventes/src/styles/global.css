@@ -20,6 +20,7 @@
 /* Nouveau style pour la partie gauche du bas */
 .left-panel-bottom {
   height: 50%;
+  overflow-y: auto; /* Ajout d'une barre de défilement si nécessaire */
   /* Ajoutez d'autres styles au besoin */
 }
 

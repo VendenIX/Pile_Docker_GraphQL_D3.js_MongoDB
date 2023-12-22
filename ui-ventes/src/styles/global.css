@@ -134,3 +134,11 @@ body {
 .category-details p {
   margin: 0;
 }
+
+.chart-legend {
+  text-align: center; /* Centre le texte */
+  font-weight: bold; /* Met le texte en gras */
+  font-size: 1.2em; /* Augmente légèrement la taille de la police */
+  margin-top: 10px; /* Ajoute un peu d'espace au-dessus de la légende */
+  color: #ffffff; /* Couleur du texte */
+}

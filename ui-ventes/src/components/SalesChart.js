@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { fetchSalesByYears } from '../services/api'; // Importez la fonction de requête que vous avez créée
-const SalesChart = ({ departmentId }) => {
+import '../styles/global.css';
+const SalesChart = ({ departmentId , nameDepartment}) => {
   const chartRef = useRef(null);
   const [data, setData] = useState([]);
 
@@ -90,7 +91,11 @@ const SalesChart = ({ departmentId }) => {
   };
 
   return (
-    <div ref={chartRef}></div>
+    <>
+      <div ref={chartRef}></div>
+      {departmentId && <div className="chart-legend">Evolution du nombre de ventes au cours des années dans le département {nameDepartment} ({departmentId})</div>}
+    </>
+
   );
 };
 

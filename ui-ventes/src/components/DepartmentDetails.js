@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchDetailsDepartments } from '../services/api'; // Importez la fonction de requête que vous avez créée
-
-const DepartmentDetails = ({ departmentId }) => {
+import '../styles/global.css';
+const DepartmentDetails = ({ departmentId , nameDepartment}) => {
     const [departmentData, setDepartmentData] = useState(null);
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const DepartmentDetails = ({ departmentId }) => {
     // Maintenant, vous pouvez utiliser les données pour afficher les détails du département
     return (
         <div>
-          <h2>Département {departmentId}</h2>
+          <h2>{nameDepartment} ({departmentId})</h2>
           {departmentData.map((data, index) => (
             <div key={index} className="department-category">
               <h3>{data.prestationDescription}</h3>

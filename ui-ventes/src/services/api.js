@@ -26,6 +26,7 @@ export const fetchDepartments = () => {
         departments {
             id
             count
+            name
         }
     }`);
 };

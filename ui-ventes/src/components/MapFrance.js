@@ -10,6 +10,9 @@ const MapFrance = () => {
     const mapRef = useRef(null);
     const [tooltipInfo, setTooltipInfo] = useState(null); // État pour le tooltip
     const [selectedDepartmentId, setSelectedDepartmentId] = useState(null); // État pour l'ID du département sélectionné
+    // Ajoutez un nouvel état pour stocker le nom du département
+    const [selectedDepartmentName, setSelectedDepartmentName] = useState(null);
+
 
     useEffect(() => {
         // Initialisation de la carte
@@ -93,6 +96,8 @@ const MapFrance = () => {
             if (dept) {
                 // Mettez à jour l'ID du département sélectionné
                 setSelectedDepartmentId(dept.id);
+                console.log("very interesting", dept)
+                setSelectedDepartmentName(dept.name);
             }
         });
 
@@ -119,8 +124,8 @@ const MapFrance = () => {
           </div>
           <div className="department-details">
             {/* Affichez le composant DepartmentDetails avec l'ID du département sélectionné */}
-            {selectedDepartmentId && <DepartmentDetails departmentId={selectedDepartmentId} />}
-            {selectedDepartmentId && <SalesChart departmentId={selectedDepartmentId} />}
+            {selectedDepartmentId && <DepartmentDetails departmentId={selectedDepartmentId}  nameDepartment = {selectedDepartmentName}  />}
+            {selectedDepartmentId && <SalesChart departmentId={selectedDepartmentId} nameDepartment = {selectedDepartmentName} />}
           </div>
         </div>
       );

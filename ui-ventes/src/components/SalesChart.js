@@ -1,8 +1,31 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-
-const SalesChart = ({ data }) => {
+import { fetchSalesByYears } from '../services/api'; // Importez la fonction de requête que vous avez créée
+const SalesChart = ({ departmentId }) => {
   const chartRef = useRef(null);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("Je suis mickey 1 !")
+        const result = await fetchSalesByYears(undefined, departmentId, undefined);
+        // Transformation des données
+        console.log("Je suis mickey 2 !", result.nbSalesByTrimester)
+        const transformedData = result.nbSalesByTrimester.map(item => ({
+          ...item,
+          date: new Date(item.date.year, item.date.trimester * 3 - 3, 1) // Convertit année et trimestre en date
+        })).sort((a, b) => a.date - b.date); 
+
+        console.log("Je suis mickey 3 !", transformedData)
+        setData(transformedData);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des données du département :", error);
+      }
+    };
+
+    fetchData();
+  }, [departmentId]);
 
   useEffect(() => {
     if (data && data.length > 0) {
@@ -10,28 +33,24 @@ const SalesChart = ({ data }) => {
     }
   }, [data]);
 
+
   const drawChart = () => {
+    d3.select(chartRef.current).selectAll("*").remove(); // Nettoyage du SVG
+
     const width = 928;
     const height = 500;
     const marginTop = 20;
     const marginRight = 20;
     const marginBottom = 30;
-    const marginLeft = 40;
+    const marginLeft = 50;
 
-    const x = d3.scaleUtc()
+    const x = d3.scaleTime()
       .domain(d3.extent(data, d => d.date))
-      .rangeRound([marginLeft, width - marginRight]);
+      .range([marginLeft, width - marginRight]);
 
     const y = d3.scaleLinear()
-      .domain(d3.extent(data, d => d.salesCount)).nice()
-      .rangeRound([height - marginBottom, marginTop]);
-
-    const color = d3.scaleOrdinal(data.map(d => d.condition), d3.schemeCategory10);
-
-    const line = d3.line()
-      .curve(d3.curveStep)
-      .x(d => x(d.date))
-      .y(d => y(d.salesCount));
+      .domain([0, d3.max(data, d => d.sum)])
+      .range([height - marginBottom, marginTop]);
 
     const svg = d3.select(chartRef.current)
       .append("svg")
@@ -42,22 +61,21 @@ const SalesChart = ({ data }) => {
 
     svg.append("g")
       .attr("transform", `translate(0,${height - marginBottom})`)
-      .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0))
-      .call(g => g.select(".domain").remove());
+      .call(d3.axisBottom(x));
 
     svg.append("g")
       .attr("transform", `translate(${marginLeft},0)`)
-      .call(d3.axisLeft(y))
-      .call(g => g.select(".domain").remove())
-      .call(g => g.select(".tick:last-of-type text").append("tspan").text("Sales Count"));
+      .call(d3.axisLeft(y));
+
+    const line = d3.line()
+      .x(d => x(d.date))
+      .y(d => y(d.sum));
 
     svg.append("path")
       .datum(data)
       .attr("fill", "none")
-      .attr("stroke", color(data[0].condition))
+      .attr("stroke", "steelblue")
       .attr("stroke-width", 2)
-      .attr("stroke-linejoin", "round")
-      .attr("stroke-linecap", "round")
       .attr("d", line);
   };
 

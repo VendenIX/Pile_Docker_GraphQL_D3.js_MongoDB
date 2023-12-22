@@ -2,9 +2,9 @@ import { MongoClient } from 'mongodb';
 
 // Connection URI
 // version container
-const uri = 'mongodb://root:example@mongodb:27017'
+//const uri = 'mongodb://root:example@mongodb:27017'
 // version runtime
-// const uri = 'mongodb://root:example@localhost:27017';
+const uri = 'mongodb://root:example@localhost:27017';
 
 // Database Name
 const dbName = 'dba';
@@ -379,9 +379,6 @@ const resolvers = {
 
 
   nbSalesByTrimester: async (_, { prestationId, departmentId, regionId }) => {
-    // const db = client.db(dbName);
-    // const collection = db.collection(collectionName);
-  
     let query = {};
   
     if (prestationId !== undefined) query['prestation.id'] = prestationId;
@@ -398,26 +395,20 @@ const resolvers = {
             year: '$date.year',
             trimester: '$date.trimester'
           },
-
-          sum: {
-            $sum: '$price'
-          },
-          avg: {
-            $avg: '$price'
-          },
-          count: {
-            $sum: 1
-          },
-
+          sum: { $sum: '$price' },
+          avg: { $avg: '$price' },
+          count: { $sum: 1 },
+          firstDate: { $first: '$date' } // Récupère le premier document de date pour chaque groupe
         }
       },
       {
         $project: {
           year: '$_id.year',
           trimester: '$_id.trimester',
-          sum: 1, 
+          sum: 1,
           avg: 1,
           count: 1,
+          date: '$firstDate', // Utilise le premier document de date récupéré pour chaque groupe
           _id: 0
         }
       }
@@ -426,23 +417,8 @@ const resolvers = {
     try {
       const nbSalesByTrimester = await collection.aggregate(pipeline).toArray();
       return nbSalesByTrimester;
-      // return nbSalesByTrimester.map(item => {
-      //   return {
-      //     id: item.id,
-      //     text: item.text,
-      //     year: item.year,
-      //     trimester: item.trimester,
-      //     month: item.month,
-      //     month_name: item.month_name,
-      //     day: item.day,
-      //     day_name: item.day_name,
-      //     hour: item.hour,
-      //     minute: item.minute,
-      //     salesCountByTrimester: item.count
-      //   };
-      // });
     } catch (error) {
-      throw new Error("Erreur lors de la récupération des dates : " + error.message);
+      throw new Error("Erreur lors de la récupération des ventes par trimestre : " + error.message);
     }
   },
   

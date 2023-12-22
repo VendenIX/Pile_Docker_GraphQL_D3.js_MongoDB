@@ -162,6 +162,7 @@ type NbSalesByTrimesterItem {
   count: Int
   sum: Int
   avg: Float
+  date: Date
 }
 
 

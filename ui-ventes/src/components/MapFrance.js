@@ -4,6 +4,7 @@ import { fetchDepartments, fetchGeoJsonData } from '../services/api';
 import '../styles/global.css';
 import '../styles/colorbrewer.css';
 import DepartmentDetails from './DepartmentDetails';
+import SalesChart from './SalesChart';
 
 const MapFrance = () => {
     const mapRef = useRef(null);
@@ -121,6 +122,7 @@ const MapFrance = () => {
           <div className="department-details">
             {/* Affichez le composant DepartmentDetails avec l'ID du département sélectionné */}
             {selectedDepartmentId && <DepartmentDetails departmentId={selectedDepartmentId} />}
+            {selectedDepartmentId && <SalesChart departmentId={selectedDepartmentId} />}
           </div>
         </div>
       );

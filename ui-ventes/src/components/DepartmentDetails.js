@@ -28,7 +28,6 @@ const DepartmentDetails = ({ departmentId }) => {
 
     // Si les données n'ont pas encore été chargées, affichez un message de chargement
     if (!departmentData) {
-        console.log("Mais pourtant mon id était ", departmentId)
         return <div>Chargement en cours...</div>;
     }
 

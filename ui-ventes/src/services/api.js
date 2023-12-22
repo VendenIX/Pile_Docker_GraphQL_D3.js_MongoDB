@@ -14,7 +14,6 @@ async function fetchGraphQL(query, variables = {}) {
             // S'il y a des erreurs dans la réponse GraphQL, lancez une erreur avec le message d'erreur
             throw new Error(json.errors[0].message);
         }
-        console.log("le piwi",json.data)
         return json.data;
     } catch (error) {
         throw error;
@@ -59,9 +58,35 @@ export const fetchDetailsDepartments = (prestationId, departmentId, minSum, maxS
     minSum,
     maxSum,
   };
-  console.log("bonjour",fetchGraphQL(query, variables));
   return fetchGraphQL(query, variables); // Appelez votre fonction de requête GraphQL avec la query et les variables.
 };
+
+export const fetchSalesByYears = (prestationId, departmentId, regionId) => {
+  const query = `
+    query Sales($prestationId: Int, $departmentId: Int, $regionId: Int) {
+      nbSalesByTrimester(
+        prestationId: $prestationId,
+        departmentId: $departmentId,
+        regionId: $regionId
+      ) {
+        count
+        sum
+        avg
+        date {
+          year
+          trimester
+          text
+        }
+      }
+    }
+  `;
+  const variables = {
+    prestationId,
+    departmentId,
+    regionId,
+  };
+  return fetchGraphQL(query, variables); // Appelez votre fonction de requête GraphQL avec la query et les variables.
+}
 
 
 export const fetchGeoJsonData = (url) => {

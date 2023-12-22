@@ -21,7 +21,7 @@ const MapFrance = () => {
             if (mapRef.current) {
               d3.select(mapRef.current).select("svg").remove();
             }
-          };
+          }; 
     }, []);
 
     const initMap = async () => {
@@ -54,25 +54,25 @@ const MapFrance = () => {
 
     const renderDepartments = (svg, geojsonData, departmentData, path) => {
         // Créez une échelle de couleurs en fonction du compte
-        const colorScale = d3.scaleQuantile()
-            .domain([0, d3.max(departmentData.departments, e => +e.count)]) // Utilisez departmentData directement
-            .range(['#f7fbff', '#08306b']); // Vous pouvez personnaliser les couleurs ici
+
+        const quantile = d3.scaleQuantile()
+            .domain([0, d3.max(departmentData.departments, e => +e.count)])
+            .range(d3.range(9).map(n => `q${n}-9`)); // Mappe à des classes telles que 'q0-9', 'q1-9', etc.
+
+
 
         // ajout des chemins de chaque département
-        const departmentPaths = svg.selectAll("path") // Utilisez selectAll pour les chemins existants
-            .data(geojsonData.features)
-            .enter()
-            .append("path")
-            .attr('id', d => "d" + d.properties.CODE_DEPT)
-            .attr("d", path)
-            .attr("class", d => {
-                const dept = departmentData.departments.find(dept => dept.id === parseInt(d.properties.CODE_DEPT));
-                return dept ? "department" : "department"; // Vous pouvez laisser la classe de base ici
-            })
-            .style("fill", d => {
-                const dept = departmentData.departments.find(dept => dept.id === parseInt(d.properties.CODE_DEPT));
-                return dept ? colorScale(dept.count) : "#ccc"; // Remplacez la couleur par celle de l'échelle
-            })
+        const departmentPaths = svg.selectAll("path")
+        .data(geojsonData.features)
+        .enter()
+        .append("path")
+        .attr('id', d => "d" + d.properties.CODE_DEPT)
+        .attr("d", path)
+        .attr("class", d => {
+            const dept = departmentData.departments.find(dept => dept.id === parseInt(d.properties.CODE_DEPT));
+            // Utilisez uniquement la classe de quantile ici, sans style "fill"
+            return dept ? `department ${quantile(dept.count)}` : "department";
+        })
             .on("mouseenter", function (event, d) {
                 const dept = departmentData.departments.find(dept => dept.id === parseInt(d.properties.CODE_DEPT));
                 if (dept) {
@@ -105,7 +105,7 @@ const MapFrance = () => {
         const corsePaths = svg.selectAll("path")
             .filter(d => d.properties.CODE_DEPT === "2A" || d.properties.CODE_DEPT === "2B");
 
-        corsePaths.style("fill", "rgb(204, 204, 204)");
+        corsePaths.style("fill", "rgb(0, 0, 0)");
     };
 
     return (

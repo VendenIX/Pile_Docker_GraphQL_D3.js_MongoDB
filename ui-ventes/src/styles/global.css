@@ -108,7 +108,7 @@
 
 body {
   margin: 0; /* Supprimez la marge par défaut du body */
-  background-color: #9A8F97; /* Définissez la couleur de fond pour tout l'écran */
+  background-color: #003366; /* Définissez la couleur de fond pour tout l'écran */
   font-family: sans-serif; /* Assurez-vous d'utiliser la police de caractères souhaitée */
   /* Ajoutez d'autres styles au besoin */
 }
@@ -120,6 +120,9 @@ body {
   border: 1px solid #ccc;
   padding: 10px;
   background-color: #f0f0f0;
+  /* bord arrondis */
+  border-radius: 15px;
+  margin-left : 5em;
 }
 
 .category-details {
@@ -141,4 +144,13 @@ body {
   font-size: 1.2em; /* Augmente légèrement la taille de la police */
   margin-top: 10px; /* Ajoute un peu d'espace au-dessus de la légende */
   color: #ffffff; /* Couleur du texte */
+}
+
+h1 {
+  color: #ffffff; /* Couleur du texte */
+  text-align: center; /* Centre le texte */
+}
+
+.graphique {
+  margin-left: 5em;
 }

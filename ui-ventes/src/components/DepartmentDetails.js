@@ -34,14 +34,14 @@ const DepartmentDetails = ({ departmentId , nameDepartment}) => {
     // Maintenant, vous pouvez utiliser les données pour afficher les détails du département
     return (
         <div>
-          <h2>{nameDepartment} ({departmentId})</h2>
+          <h1>{nameDepartment} ({departmentId})</h1>
           {departmentData.map((data, index) => (
             <div key={index} className="department-category">
               <h3>{data.prestationDescription}</h3>
               <div className="category-details">
                 <div>
                   <p><b>Sum:</b> {data.sum}</p>
-                  <p><b>Avg:</b> {data.avg}</p>
+                  <p><b>Avg:</b> {data.avg.toFixed(2)}</p>
                 </div>
                 <div>
                   <p><b>Count:</b> {data.count}</p>

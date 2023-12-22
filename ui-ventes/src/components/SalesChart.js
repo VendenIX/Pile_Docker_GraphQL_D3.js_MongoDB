@@ -67,6 +67,7 @@ const SalesChart = ({ departmentId , nameDepartment}) => {
       .append("svg")
       .attr("width", width)
       .attr("height", height)
+      .attr("color", "white")
       .attr("viewBox", [0, 0, width, height])
       .attr("style", "max-width: 100%; height: auto;");
 
@@ -92,8 +93,8 @@ const SalesChart = ({ departmentId , nameDepartment}) => {
 
   return (
     <>
-      <div ref={chartRef}></div>
-      {departmentId && <div className="chart-legend">Evolution du nombre de ventes au cours des années dans le département {nameDepartment} ({departmentId})</div>}
+      <div className="graphique" ref={chartRef}></div>
+      {departmentId && <div className="chart-legend">Evolution du chiffre d'affaire dans le département {nameDepartment} ({departmentId})</div>}
     </>
 
   );

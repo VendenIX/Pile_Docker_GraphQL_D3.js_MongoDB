@@ -7,36 +7,40 @@ const SalesChart = ({ departmentId }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if(departmentId) {
       try {
-        console.log("Je suis mickey 1 !")
         const result = await fetchSalesByYears(undefined, departmentId, undefined);
         // Transformation des données
-        console.log("Je suis mickey 2 !", result.nbSalesByTrimester)
         const transformedData = result.nbSalesByTrimester.map(item => ({
           ...item,
           date: new Date(item.date.year, item.date.trimester * 3 - 3, 1) // Convertit année et trimestre en date
         })).sort((a, b) => a.date - b.date); 
-
-        console.log("Je suis mickey 3 !", transformedData)
         setData(transformedData);
       } catch (error) {
         console.error("Erreur lors de la récupération des données du département :", error);
       }
     };
-
+  }
     fetchData();
   }, [departmentId]);
 
   useEffect(() => {
-    return () => {
+    // Assurez-vous que le SVG est nettoyé avant de dessiner un nouveau graphique
+    const cleanUpSvg = () => {
       if (chartRef.current) {
-        d3.select(chartRef.current).select("svg").remove();
-      }
-      if (data && data.length > 0) {
-        drawChart();
+        d3.select(chartRef.current).selectAll("*").remove();
       }
     };
+  
+    // Nettoyage du SVG lors du démontage du composant
+    return cleanUpSvg;
+  }, []);
 
+  useEffect(() => {
+    // Dessiner le graphique uniquement si les données sont disponibles
+    if (data && data.length > 0) {
+      drawChart();
+    }
   }, [data]);
 
 

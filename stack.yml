@@ -17,7 +17,7 @@ services:
   apache:
     image: php:7.2-apache
     ports:
-      - "83:80"
+      - "80:80"
     volumes:
       - ./ui-ventes/:/var/www/html
     build: 

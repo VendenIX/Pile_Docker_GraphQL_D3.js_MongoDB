@@ -59,7 +59,29 @@ const MapFrance = () => {
             .domain([0, d3.max(departmentData.departments, e => +e.count)])
             .range(d3.range(9).map(n => `q${n}-9`)); // Mappe à des classes telles que 'q0-9', 'q1-9', etc.
 
+            // Création de la légende
+        const legend = svg.append('g')
+        .attr('transform', 'translate(525, 150)')
+        .attr('id', 'legend');
 
+        legend.selectAll('.colorbar')
+            .data(d3.range(9))
+            .enter().append('rect')
+            .attr('y', d => d * 20 + 'px')
+            .attr('height', '20px')
+            .attr('width', '20px')
+            .attr('x', '0px')
+            .attr("class", d => `q${d}-9`);
+
+        // Echelle pour la légende
+        const legendScale = d3.scaleLinear()
+            .domain([0, d3.max(departmentData.departments, e => +e.count)])
+            .range([0, 9 * 20]);
+
+        // Ajout de l'axe à la légende
+        const legendAxis = svg.append("g")
+            .attr('transform', 'translate(550, 150)')
+            .call(d3.axisRight(legendScale).ticks(6));
 
         // ajout des chemins de chaque département
         const departmentPaths = svg.selectAll("path")

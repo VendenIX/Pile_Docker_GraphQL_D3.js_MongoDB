@@ -14,13 +14,11 @@ const MapFrance = () => {
     useEffect(() => {
         // Initialisation de la carte
         initMap();
-        /*
-        // Fonction de nettoyage pour éviter les doublons
         return () => {
             if (mapRef.current) {
-                d3.select(mapRef.current).select("svg").remove();
+              d3.select(mapRef.current).select("svg").remove();
             }
-        };*/
+          };
     }, []);
 
     const initMap = async () => {

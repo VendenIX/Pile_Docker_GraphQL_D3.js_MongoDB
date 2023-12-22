@@ -28,9 +28,15 @@ const SalesChart = ({ departmentId }) => {
   }, [departmentId]);
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      drawChart();
-    }
+    return () => {
+      if (chartRef.current) {
+        d3.select(chartRef.current).select("svg").remove();
+      }
+      if (data && data.length > 0) {
+        drawChart();
+      }
+    };
+
   }, [data]);
 
 

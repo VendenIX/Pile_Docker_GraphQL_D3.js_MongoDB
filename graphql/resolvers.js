@@ -2,12 +2,12 @@ import { MongoClient } from 'mongodb';
 
 // Connection URI
 // version container
-//const uri = 'mongodb://root:example@mongodb:27017'
+const uri = 'mongodb://root:example@mongodb:27017'
 // version runtime
-const uri = 'mongodb://root:example@localhost:27017';
+//const uri = 'mongodb://root:example@localhost:27017';
 
 // Database Name
-const dbName = 'dba';
+const dbName = 'bda';
 
 // Collection Name
 const collectionName = 'sales';

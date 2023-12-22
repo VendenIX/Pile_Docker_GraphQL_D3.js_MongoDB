@@ -118,7 +118,6 @@ const MapFrance = () => {
             if (dept) {
                 // Mettez à jour l'ID du département sélectionné
                 setSelectedDepartmentId(dept.id);
-                console.log("very interesting", dept)
                 setSelectedDepartmentName(dept.name);
             }
         });

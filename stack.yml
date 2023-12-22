@@ -1,26 +1,30 @@
 version: "3.6" 
 
 services:
-  #graphql:
-  # image: graphql
-  # ports:
-  #   - 4000:4000
-  # links:
-  #  - "mongo:mongodb"
-  # build:
-  #   context: graphql
-  #   dockerfile: Dockerfile
-  # environment:
-  #   - MONGO_URI=mongodb://root:example@mongo:27017
+  #docker utilisera l'image existante nommée graphql si elle existe , sinon il la construira
+  graphql:
+   image: graphql
+   ports:
+     - 4000:4000
+   links:
+    - "mongo:mongodb"
+   build:
+     context: graphql
+     dockerfile: Dockerfile
+   environment:
+     - MONGO_URI=mongodb://root:example@mongo:27017
 
   apache:
-        image: php:7.2-apache
-        ports:
-          - 83:83
-        volumes:
-          - ./ui/:/var/www/html
-        #links:
-        #  - "graphql:graphql"
+    image: php:7.2-apache
+    ports:
+      - "83:80"
+    volumes:
+      - ./ui-ventes/:/var/www/html
+    build: 
+      context: ui-ventes/ #chemin vers le Dockerfile du react
+      dockerfile: Dockerfile
+    depends_on:
+      - graphql
    
   mongo:
     image: mongo:7.0.2

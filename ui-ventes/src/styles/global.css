@@ -1,6 +1,6 @@
 .main-container {
     display: flex;
-    background-color: darkblue;
+    background-color: #003366;
   }
   
   .left-panel, .right-panel {
@@ -108,7 +108,7 @@
 
 body {
   margin: 0; /* Supprimez la marge par défaut du body */
-  background-color: darkblue; /* Définissez la couleur de fond pour tout l'écran */
+  background-color: #9A8F97; /* Définissez la couleur de fond pour tout l'écran */
   font-family: sans-serif; /* Assurez-vous d'utiliser la police de caractères souhaitée */
   /* Ajoutez d'autres styles au besoin */
 }

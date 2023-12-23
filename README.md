@@ -119,4 +119,4 @@ https://zanuttini.users.greyc.fr/
 
 **François Rioult**  
 
-<img src="images_readme/Logo_Université_de_Caen_Normandie_2018.png" width="200" height="125" alt="Logo de l'Université de Caen Normandie">
+<img src="images_readme/LOGO-UNICAEN_V-2.1-B.png" width="200" height="125" alt="Logo de l'Université de Caen Normandie">

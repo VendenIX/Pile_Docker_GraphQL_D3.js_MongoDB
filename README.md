@@ -111,9 +111,12 @@ security.fileuri.strict_origin_policy true -> false
 [![GitHub](https://img.shields.io/badge/GitHub-Amirath6-blue?style=flat-square&logo=github)](https://github.com/Amirath6)
 
 
+
 ## Encadré par nos enseignants de l'université de Caen Normandie
 
 **Bruno Zanuttini**  
 https://zanuttini.users.greyc.fr/
 
 **François Rioult**  
+
+<img src="images_readme/Logo_Université_de_Caen_Normandie_2018.png" width="200" height="125" alt="Logo de l'Université de Caen Normandie">

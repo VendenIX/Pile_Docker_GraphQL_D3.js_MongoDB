@@ -35,6 +35,10 @@ Attention, si vous avez fait des modifications ou avez déjà des images comport
 
 Attention, le port 80 doit être libre sur votre machine, sinon il faudra changer le port dans le fichier stack.yml.
 
+Si vous avez une erreur, c'est peut-être que le build n'est pas généré et il faut le générer en allant dans ui-ventes et faire `npm run build`
+
+Si il y a encore une erreur, c'est peut-être votre version de docker trop avancée qui fait tout bug, dans ce cas je vous conseilles de passer à une version antérieure, si vous avez installé docker avec snap sur debian, vous pouvez faire cette commande : `sudo snap refresh docker --channel=latest/edge`
+
 Insérer les données présentes d'exemple du fichier sales.bson: (le fichier sales.bson est fourni à la racine du projet)
 ```
 docker exec -i mongo-dev sh -c 'mongoimport -d bda -c sales --authenticationDatabase admin -u root -p example' < sales.bson

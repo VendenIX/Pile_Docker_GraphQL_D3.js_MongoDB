@@ -26,7 +26,7 @@ Ce projet contient une pile de containers permettant de lancer une visualisation
 
 Vous pouvez visualiser une démonstration de ce projet en regardant la vidéo ci-dessous :
 
-[![Demo Video](images_readme/demo.png)](images_readme/video_demo.mp4)
+[![Demo Video](images_readme/ezgif.com-video-to-gif-converted.gif)](images_readme/ezgif.com-video-to-gif-converted.gif)
 
 Cliquez sur l'image pour lancer la vidéo.
 

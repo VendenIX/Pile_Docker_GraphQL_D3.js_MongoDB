@@ -74,7 +74,7 @@ node index.js
 ```
 
 ## React
-Pour lancer le serveur GraphQL local :
+Pour lancer le serveur React local :
 ```
 npm install
 npm start

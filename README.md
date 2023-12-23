@@ -22,8 +22,14 @@ Ce projet contient une pile de containers permettant de lancer une visualisation
 
  Pour aller plus loin dans ce projet dans le futur dans quelques années, on pourrait faire en sorte que l'utilisateur entre un prompt et que une IA génère une nouvelle visualisation de données en fonction de ce prompt. On pourrait aussi faire en sorte que l'utilisateur puisse choisir les données qu'il veut visualiser, et que l'IA génère une visualisation en fonction de ces données, en adaptant les requêtes graphQL, en utilisant une nouvelle technologie à base d'algorithme de Monté-Carlo boosté à l'IA.
 
-# Un exemple de la visualisation de données du fichier sales.bson
-![Exemple de visualisation de données](images_readme/demo.png)
+ ## Demo video
+
+Vous pouvez visualiser une démonstration de ce projet en regardant la vidéo ci-dessous :
+
+[![Demo Video](images_readme/demo.png)](images_readme/video_demo.mp4)
+
+Cliquez sur l'image pour lancer la vidéo.
+
 # Pour le professeur, ou le client qui veut lancer la pile de containers:
 
 Se placer dans le dossier racine du projet où se trouve le fichier stack.yml

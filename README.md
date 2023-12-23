@@ -80,7 +80,7 @@ npm install
 npm start
 ```
 
-Pour faire le build de l'LUI :
+Pour faire le build de l'UI :
 ```
 npm run build
 ```

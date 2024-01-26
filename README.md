@@ -118,5 +118,6 @@ security.fileuri.strict_origin_policy true -> false
 https://zanuttini.users.greyc.fr/
 
 **François Rioult**  
+https://rioultf.github.io/
 
 <img src="images_readme/LOGO-UNICAEN_V-2.1-B.png" width="200" height="125" alt="Logo de l'Université de Caen Normandie">
